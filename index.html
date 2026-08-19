@@ -193,41 +193,48 @@ var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={
     maxNativeZoom: 20
 });
 
-
         map.addLayer(layer_GoogleSatellite_0);
         function pop_prop_visitadas_1(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Proc_GUA3_'] !== null ? autolinker.link(String(feature.properties['Proc_GUA3_']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Torre_1'] !== null ? autolinker.link(String(feature.properties['Torre_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['proc'] !== null ? autolinker.link(String(feature.properties['proc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['propr'] !== null ? autolinker.link(String(feature.properties['propr']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['visita'] !== null ? autolinker.link(String(feature.properties['visita']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['perc'] !== null ? autolinker.link(String(feature.properties['perc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
+    var popupContent = '<table>\
+            <tr>\
+                <td>fid</td>\
+                <td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>Name</td>\
+                <td>' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>Proc_GUA3_</td>\
+                <td>' + (feature.properties['Proc_GUA3_'] !== null ? autolinker.link(String(feature.properties['Proc_GUA3_']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>Torre_1</td>\
+                <td>' + (feature.properties['Torre_1'] !== null ? autolinker.link(String(feature.properties['Torre_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>proc</td>\
+                <td>' + (feature.properties['proc'] !== null ? autolinker.link(String(feature.properties['proc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>propr</td>\
+                <td>' + (feature.properties['propr'] !== null ? autolinker.link(String(feature.properties['propr']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>visita</td>\
+                <td>' + (feature.properties['visita'] !== null ? autolinker.link(String(feature.properties['visita']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <td>perc</td>\
+                <td>' + (feature.properties['perc'] !== null ? autolinker.link(String(feature.properties['perc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+            </tr>\
+        </table>';
+    var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+    layer.on('popupopen', function(e) {
+        addClassToPopupIfMedia(content, e.popup);
+    });
+    layer.bindPopup(content, { maxHeight: 400 });
+}
 
         function style_prop_visitadas_1_0(feature) {
             switch(String(feature.properties['visita'])) {
@@ -412,7 +419,7 @@ L.control.layers(
         map.on("zoomend", function(){
 
                 if (map.hasLayer(layer_prop_visitadas_1)) {
-                    if (map.getZoom() <= 12 && map.getZoom() >= 19) {
+                    if (map.getZoom() >= 13) {
                         layer_prop_visitadas_1.eachLayer(function (layer) {
                             layer.openTooltip();
                         });
@@ -430,7 +437,7 @@ L.control.layers(
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #ffffff; font-size: 5pt; font-weight: bold; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_prop_visitadas_1'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #ffffff; font-size: 8pt; font-family: \'Arial\', sans-serif; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 2px #000;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_prop_visitadas_1'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
