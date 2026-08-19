@@ -44,7 +44,7 @@
 }
 .logo-link {
     position: fixed;
-    bottom: 6px;
+    top: 6px;
     left: 10px;
     z-index: 9999;
 }
@@ -86,8 +86,8 @@
         <script src="data/SEs_3.js"></script>
         <script>
         var map = L.map('map', {
-            zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-30.289554879948362,-51.82163484265591],[-29.604141888749588,-50.66379078955597]]);
+    zoomControl:false, maxZoom:28, minZoom:1
+});
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -284,6 +284,7 @@ var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={
         });
         bounds_group.addLayer(layer_prop_visitadas_1);
         map.addLayer(layer_prop_visitadas_1);
+        map.fitBounds(layer_prop_visitadas_1.getBounds());
         if (json_prop_visitadas_1.features.length > 0) {
     var percValue = json_prop_visitadas_1.features[0].properties['perc'];
     if (percValue !== null && percValue !== undefined) {
@@ -313,7 +314,7 @@ var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={
             return {
                 pane: 'pane_LT_525kV_Capivari_Sul_Guaiba3_2',
                 opacity: 1,
-                color: 'rgba(255,0,0,1.0)',
+                color: 'rgba(255,150,0,1.0)',
                 dashArray: '',
                 lineCap: 'round',
                 lineJoin: 'round',
