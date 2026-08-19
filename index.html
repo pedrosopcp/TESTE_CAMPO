@@ -24,7 +24,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 60px;
     background: #0a4d36;
     color: #ffffff;
     display: flex;
@@ -37,20 +37,20 @@
 
 #map {
     position: absolute;
-    top: 40px;
+    top: 60px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 60px);
 }
 .logo-link {
     position: fixed;
-    top: 6px;
+    top: 11px;
     left: 10px;
     z-index: 9999;
 }
 
 .logo-link img {
-    height: 30px;
+    height: 40px;
     display: block;
 }
 
@@ -89,7 +89,7 @@
     zoomControl:false, maxZoom:28, minZoom:1
 });
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix(' <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
@@ -164,8 +164,36 @@
             }
         }
         var zoomControl = L.control.zoom({
-            position: 'topleft'
-        }).addTo(map);
+    position: 'topleft'
+}).addTo(map);
+
+var locateControl = L.control({position: 'topleft'});
+locateControl.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    div.innerHTML = '<a href="#" title="Minha localização" role="button" aria-label="Minha localização" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:#fff;font-size:16px;"><i class="fas fa-crosshairs"></i></a>';
+    L.DomEvent.disableClickPropagation(div);
+    div.onclick = function(e) {
+        e.preventDefault();
+        if (!navigator.geolocation) {
+            alert('Geolocalização não suportada neste navegador.');
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                map.setView([lat, lng], 18);
+                L.marker([lat, lng]).addTo(map).bindPopup('Você está aqui').openPopup();
+            },
+            function(error) {
+                alert('Não foi possível obter sua localização. Verifique se a permissão de localização está habilitada.');
+            },
+            { enableHighAccuracy: true }
+        );
+    };
+    return div;
+};
+locateControl.addTo(map);
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
