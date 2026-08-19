@@ -19,6 +19,93 @@
             padding: 0;
 }
 
+/* ========================================
+   PAINEL INFERIOR======================================= */
+
+#bottom-panel {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40vh;
+    background: rgba(5, 5, 5, 0.95);
+    z-index: 9997;
+    box-shadow: 0 -3px 12px rgba(0,0,0,0.30);
+    font-family: Arial, sans-serif;
+    transition: transform 0.35s ease;
+}
+
+/* Título do painel */
+#bottom-panel-title {
+    height: 8px;
+    background: #0a4d36;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Conteúdo */
+#bottom-panel-content {
+    height: calc(100% - 40px);
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-size: 10px;
+    
+}
+
+#bottom-panel-content h3 {
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+#bottom-panel-content p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #ffffff;
+}
+
+/* Botão abrir/fechar */
+#bottom-panel-toggle {
+    position: absolute;
+    top: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 55px;
+    background: #0a4d36;
+    color: #ffffff;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.25);
+}
+
+#bottom-panel-toggle i {
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+#bottom-panel-toggle::after {
+    content: "GRÁFICOS";
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Painel fechado */
+#bottom-panel.closed {
+    transform: translateY(100%);
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -50,7 +137,7 @@
 }
 
 .logo-link img {
-    height: 40px;
+    height: 25px;
     display: block;
 }
 
@@ -195,6 +282,7 @@
 
 
 </style>
+
         <title></title>
     </head>
     <body>
@@ -278,6 +366,35 @@
 
     </div>
 </div>
+
+<!-- ========================================
+     PAINEL INFERIOR
+     ======================================== -->
+
+<div id="bottom-panel">
+
+    <div id="bottom-panel-toggle">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <div id="bottom-panel-title">
+    
+    </div>
+
+    <div id="bottom-panel-content">
+
+        <h3>Informações</h3>
+
+        <p>
+            Selecione uma feição no mapa para visualizar
+            informações detalhadas.
+        </p>
+
+    </div>
+
+</div>
+
+
 <div id="map">
 
     <a href="https://profill.com.br/" target="_blank" rel="noopener noreferrer" class="logo-link">
@@ -735,7 +852,30 @@ legendToggle.addEventListener('click', function () {
     }
 
 });
+// ========================================
+// CONTROLE DO PAINEL INFERIOR
+// ========================================
 
+var bottomPanel = document.getElementById('bottom-panel');
+var bottomPanelToggle = document.getElementById('bottom-panel-toggle');
+
+bottomPanelToggle.addEventListener('click', function () {
+
+    bottomPanel.classList.toggle('closed');
+
+    if (bottomPanel.classList.contains('closed')) {
+
+        bottomPanelToggle.innerHTML =
+            '<i class="fas fa-chevron-up"></i>';
+
+    } else {
+
+        bottomPanelToggle.innerHTML =
+            '<i class="fas fa-chevron-down"></i>';
+
+    }
+
+});
 
         </script>
     </body>
