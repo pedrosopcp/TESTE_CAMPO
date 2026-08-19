@@ -19,8 +19,7 @@
             padding: 0;
 }
 
-/* ========================================
-   PAINEL INFERIOR======================================= */
+/* PAINEL INFERIOR */
 
 #bottom-panel {
     position: fixed;
@@ -141,12 +140,11 @@
     display: block;
 }
 
-/* ================================
-   LEGENDA LATERAL REBATÍVEL   */
+/* Aba da Legenda*/
 
 #legend-panel {
     position: fixed;
-    top: 250px;
+    top: 150px;
     right: 0;
     width: 250px;
     max-height: calc(100vh - 75px);
@@ -168,7 +166,7 @@
 /* botão para abrir/fechar */
 #legend-toggle {
     position: fixed;
-    top: 250px;
+    top: 150px;
     right: 0;
     width: 38px;
     height: 115px;
@@ -285,6 +283,7 @@
 
         <title></title>
     </head>
+
     <body>
         <div class="header" id="app-header">
     Acompanhamento de Visitas
@@ -416,6 +415,8 @@
         <script src="data/prop_visitadas_1.js"></script>
         <script src="data/LT_525kV_Capivari_Sul_Guaiba3_2.js"></script>
         <script src="data/SEs_3.js"></script>
+
+
         <script>
         var map = L.map('map', {
     zoomControl:false, maxZoom:28, minZoom:1
