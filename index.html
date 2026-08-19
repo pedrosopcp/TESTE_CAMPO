@@ -12,16 +12,64 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <style>
-        #map {
-            width: 1192px;
-            height: 815px;
-        }
-        </style>
+            html, body, #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #0a4d36;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    z-index: 9999;
+}
+
+#map {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 40px);
+}
+.logo-link {
+    position: fixed;
+    bottom: 6px;
+    left: 10px;
+    z-index: 9999;
+}
+
+.logo-link img {
+    height: 30px;
+    display: block;
+}
+
+
+</style>
         <title></title>
     </head>
     <body>
-        <div id="map">
-        </div>
+        <div class="header" id="app-header">
+    Acompanhamento de Visitas
+</div>
+
+<div id="map">
+
+    <a href="https://profill.com.br/" target="_blank" rel="noopener noreferrer" class="logo-link">
+    <img src="https://profill.com.br/wp-content/webp-express/webp-images/uploads/2024/08/branco-3.png.webp" alt="Profill">
+</a>
+</div>
+
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/L.Control.Layers.Tree.min.js"></script>
@@ -133,6 +181,19 @@
             maxNativeZoom: 20
         });
         layer_GoogleSatellite_0;
+        map.createPane('pane_GoogleMaps_0');
+map.getPane('pane_GoogleMaps_0').style.zIndex = 400;
+var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    pane: 'pane_GoogleMaps_0',
+    opacity: 1,
+    attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+    minZoom: 1,
+    maxZoom: 28,
+    minNativeZoom: 0,
+    maxNativeZoom: 20
+});
+
+
         map.addLayer(layer_GoogleSatellite_0);
         function pop_prop_visitadas_1(feature, layer) {
             var popupContent = '<table>\
@@ -216,6 +277,12 @@
         });
         bounds_group.addLayer(layer_prop_visitadas_1);
         map.addLayer(layer_prop_visitadas_1);
+        if (json_prop_visitadas_1.features.length > 0) {
+    var percValue = json_prop_visitadas_1.features[0].properties['perc'];
+    if (percValue !== null && percValue !== undefined) {
+        document.getElementById('app-header').innerHTML = 'Acompanhamento de Visitas   -   ' + percValue;
+    }
+}
         function pop_LT_525kV_Capivari_Sul_Guaiba3_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -239,7 +306,7 @@
             return {
                 pane: 'pane_LT_525kV_Capivari_Sul_Guaiba3_2',
                 opacity: 1,
-                color: 'rgba(255,239,17,1.0)',
+                color: 'rgba(255,0,0,1.0)',
                 dashArray: '',
                 lineCap: 'round',
                 lineJoin: 'round',
@@ -320,6 +387,28 @@
         });
         bounds_group.addLayer(layer_SEs_3);
         map.addLayer(layer_SEs_3);
+
+        var baseMaps = {
+    "Google Satellite": layer_GoogleSatellite_0,
+    "Google Maps": layer_GoogleMaps_0
+};
+
+var overlayMaps = {
+    "Propriedades Visitadas": layer_prop_visitadas_1,
+    "LT 525kV Capivari Sul - Guaíba 3": layer_LT_525kV_Capivari_Sul_Guaiba3_2,
+    "Subestações": layer_SEs_3
+};
+
+L.control.layers(
+    baseMaps,
+    overlayMaps,
+    {
+        collapsed: true,
+        position: 'topright'
+    }
+).addTo(map);
+
+
         map.on("zoomend", function(){
 
                 if (map.hasLayer(layer_prop_visitadas_1)) {
