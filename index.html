@@ -54,6 +54,145 @@
     display: block;
 }
 
+/* ================================
+   LEGENDA LATERAL REBATÍVEL   */
+
+#legend-panel {
+    position: fixed;
+    top: 250px;
+    right: 0;
+    width: 250px;
+    max-height: calc(100vh - 75px);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: -3px 3px 12px rgba(0,0,0,0.30);
+    z-index: 9998;
+    font-family: Arial, sans-serif;
+    border-radius: 8px 0 0 8px;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+/* legenda aberta */
+#legend-panel.open {
+    transform: translateX(0);
+}
+
+/* botão para abrir/fechar */
+#legend-toggle {
+    position: fixed;
+    top: 250px;
+    right: 0;
+    width: 38px;
+    height: 115px;
+    background: #0a4d36;
+    color: white;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: -2px 2px 8px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+}
+
+/* Ícone */
+#legend-toggle i {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+/* Texto LEGENDA */
+#legend-toggle::after {
+    content: "LEGENDA";
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* botão quando legenda está aberta */
+#legend-toggle.open {
+    right: 255px;
+}
+
+/* título */
+.legend-title {
+    background: #0a4d36;
+    color: white;
+    padding: 12px 15px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* conteúdo */
+.legend-content {
+    padding: 12px 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 125px);
+}
+
+/* cada camada */
+.legend-layer {
+    margin-bottom: 18px;
+}
+
+/* nome da camada */
+.legend-layer-title {
+    font-weight: bold;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* item da legenda */
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+    font-size: 12px;
+    color: #444;
+}
+
+/* símbolo quadrado */
+.legend-symbol-polygon {
+    width: 22px;
+    height: 15px;
+    margin-right: 8px;
+    border: 1px solid #333;
+    flex-shrink: 0;
+}
+
+/* símbolo de linha */
+.legend-symbol-line {
+    width: 25px;
+    height: 0;
+    border-top: 3px solid;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+/* símbolo de ponto */
+.legend-symbol-point {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin: 0 13px 0 5px;
+    border: 2px solid #000000;
+    flex-shrink: 0;
+}
+
+/* separador */
+.legend-separator {
+    border-top: 1px solid #ddd;
+    margin: 12px 0;
+}
+
 
 </style>
         <title></title>
@@ -62,7 +201,83 @@
         <div class="header" id="app-header">
     Acompanhamento de Visitas
 </div>
+<!-- ================================
+     LEGENDA LATERAL
+     ================================ -->
 
+<div id="legend-toggle" title="Mostrar legenda">
+    <i class="fas fa-list"></i>
+</div>
+
+<div id="legend-panel">
+
+    <div class="legend-title">
+       
+    </div>
+
+    <div class="legend-content">
+
+        <!-- PROPRIEDADES VISITADAS -->
+        <div class="legend-layer">
+
+            <div class="legend-layer-title">
+                Propriedades Visitadas
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-symbol-polygon"
+                      style="background: rgba(1,255,31,0.5);">
+                </span>
+                Concluído
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-symbol-polygon"
+                      style="background: rgba(255,221,1,0.5);">
+                </span>
+                Não concluído
+            </div>
+
+        </div>
+
+        <div class="legend-separator"></div>
+
+        <!-- LINHA DE TRANSMISSÃO -->
+        <div class="legend-layer">
+
+            <div class="legend-layer-title">
+                LT 525kV Capivari Sul - Guaíba 3
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-symbol-line"
+                      style="border-color: rgba(255,150,0,1);">
+                </span>
+                Linha de transmissão 525 kV
+            </div>
+
+        </div>
+
+        <div class="legend-separator"></div>
+
+        <!-- SUBESTAÇÕES -->
+        <div class="legend-layer">
+
+            <div class="legend-layer-title">
+                Subestações
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-symbol-point"
+                      style="background: rgba(255,239,17,1);">
+                </span>
+                Subestação
+            </div>
+
+        </div>
+
+    </div>
+</div>
 <div id="map">
 
     <a href="https://profill.com.br/" target="_blank" rel="noopener noreferrer" class="logo-link">
@@ -494,6 +709,34 @@ L.control.layers(
         map.on("layerremove", function(){
             resetLabels([layer_prop_visitadas_1]);
         });
+
+        // ========================================
+// CONTROLE DA LEGENDA LATERAL
+// ========================================
+
+var legendToggle = document.getElementById('legend-toggle');
+var legendPanel = document.getElementById('legend-panel');
+
+legendToggle.addEventListener('click', function () {
+
+    legendPanel.classList.toggle('open');
+    legendToggle.classList.toggle('open');
+
+    if (legendPanel.classList.contains('open')) {
+
+        legendToggle.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        legendToggle.title = 'Ocultar legenda';
+
+    } else {
+
+        legendToggle.innerHTML = '<i class="fas fa-list"></i>';
+        legendToggle.title = 'Mostrar legenda';
+
+    }
+
+});
+
+
         </script>
     </body>
 </html>
