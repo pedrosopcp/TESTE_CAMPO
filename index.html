@@ -1278,14 +1278,14 @@ bottomPanelToggle.addEventListener('click', function () {
             var CLASS_ORDER = ['Classe 1', 'Classe 2', 'Classe 3', 'Ac. Classe 3', 'Classe 4', 'Ac. Classe 4', 'SLE', 'Não avaliado'];
 
             var CLASS_COLORS = {
-                'Classe 1': '#2ecc71',
-                'Classe 2': '#8bc34a',
-                'Classe 3': '#f1c40f',
-                'Ac. Classe 3': '#e67e22',
-                'Classe 4': '#e74c3c',
-                'Ac. Classe 4': '#8e2b2b',
-                'SLE': '#5b8ac5',
-                'Não avaliado': '#5a5a5a'
+                'Classe 1': '#018dff',
+                'Classe 2': '#1ed132',
+                'Classe 3': '#ffd901',
+                'Ac. Classe 3': '#ff6b01',
+                'Classe 4': '#ff4f46',
+                'Ac. Classe 4': '#ba0c06',
+                'SLE': '#888888',
+                'Não avaliado': '#ffffff'
             };
 
             var allData = [];
@@ -1481,7 +1481,7 @@ bottomPanelToggle.addEventListener('click', function () {
 
                 body.innerHTML = sorted.map(function (r) {
                     var c = normalizeClass(r.classe_final);
-                    var color = CLASS_COLORS[c] || '#5a5a5a';
+                    var color = CLASS_COLORS[c] || '#5a5a5';
                     return '<tr>' +
                         '<td>' + (r.ponto || '') + '</td>' +
                         '<td>' + (r.subcomite_sigla || '') + '</td>' +
