@@ -286,7 +286,7 @@
 
     <body>
         <div class="header" id="app-header">
-    Acompanhamento de Visitas
+    Propriedades Visitadas - LT 525kV Capivari Sul - Guaíba 3
 </div>
 <!-- ================================
      LEGENDA LATERAL
@@ -646,12 +646,8 @@ var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={
         bounds_group.addLayer(layer_prop_visitadas_1);
         map.addLayer(layer_prop_visitadas_1);
         map.fitBounds(layer_prop_visitadas_1.getBounds());
-        if (json_prop_visitadas_1.features.length > 0) {
-    var percValue = json_prop_visitadas_1.features[0].properties['perc'];
-    if (percValue !== null && percValue !== undefined) {
-        document.getElementById('app-header').innerHTML = 'Acompanhamento de Visitas   -   ' + percValue;
-    }
-}
+        if (json_prop_visitadas_1.features.length > 0) 
+    
         function pop_LT_525kV_Capivari_Sul_Guaiba3_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
